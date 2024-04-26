@@ -2,6 +2,7 @@
   "name": "merge-electron-next",
   "version": "0.1.0",
   "private": true,
+  "main": "src/main.js",
   "scripts": {
     "next-dev": "next dev",
     "next-build": "next build",
