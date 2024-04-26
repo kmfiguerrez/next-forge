@@ -15,17 +15,14 @@ type TCardWrapperProps = {
 
 const CardWrapper: React.FC<TCardWrapperProps> = ({ children }) => {
   return (
-    <Card>
+    <Card className="w-[350px] mx-auto">
       <CardHeader>
         <CardTitle>Card Title</CardTitle>
         <CardDescription>Card Description</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className=''>
         {children}
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
 
   )

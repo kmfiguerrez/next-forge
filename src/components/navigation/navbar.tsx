@@ -9,9 +9,9 @@ const Navbar = () => {
         <Link href="/">Home</Link>
       </Button>
 
-      <Button variant={"link"} asChild>
+      {/* <Button variant={"link"} asChild>
         <Link href="/auth/register">Register</Link>
-      </Button>
+      </Button> */}
     </nav>
   )
 }

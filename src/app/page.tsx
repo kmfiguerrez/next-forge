@@ -1,8 +1,9 @@
+import RegisterForm from "@/components/forms/register-form";
 
 export default function Home() {
   return (
     <main>
-      <h1>Welcome to electron forge.</h1>
+      <RegisterForm />
     </main>
   );
 }
