@@ -10,7 +10,7 @@ const Navbar = () => {
       </Button>
 
       <Button variant={"link"} asChild>
-        <Link href="/auth/register">register</Link>
+        <Link href="/auth/register">Register</Link>
       </Button>
     </nav>
   )
