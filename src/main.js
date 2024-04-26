@@ -10,7 +10,7 @@ const serve = require("electron-serve");
 const path = require("path");
 
 const appServe = app.isPackaged ? serve({
-  directory: path.join(__dirname, "../out")
+  directory: path.join(__dirname, "../dist")
 }) : null;
 
 const createWindow = () => {
