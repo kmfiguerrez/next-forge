@@ -5,7 +5,7 @@
 */
 
 
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const serve = require("electron-serve");
 const path = require("path");
 
@@ -26,17 +26,32 @@ const createWindow = () => {
     appServe(win).then(() => {
       win.loadURL("app://-");
     });
+
   } else {
     win.loadURL("http://localhost:3000");
     win.webContents.openDevTools();
     win.webContents.on("did-fail-load", (e, code, desc) => {
       win.webContents.reloadIgnoringCache();
     });
+
+    const dialogOpts = {
+      type: 'info',
+      buttons: ['Restart', 'Later'],
+      title: 'Application Update',
+      message: process.platform === 'win32' ? "releaseNotes" : "releaseName",
+      detail:
+        'A new version has been downloaded. Restart the application to apply the updates.'
+    }
+
+    dialog.showMessageBox(dialogOpts).then(returnValue => {
+      console.log("Response: ", returnValue.response)
+    })    
   }
 }
 
 app.on("ready", () => {
-    createWindow();
+  ipcMain.handle("ping", () => "pong")
+  createWindow();
 });
 
 app.on("window-all-closed", () => {

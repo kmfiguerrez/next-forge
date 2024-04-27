@@ -1,13 +1,13 @@
 "use client"
- 
+
+import { ipcRenderer } from 'electron';
+
 import { useState } from "react"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
 import { useRouter } from 'next/navigation'
-
-import registerSchema, { TregisterSchema } from "@/schemas/register-schema"
 
 import FormSucess from "./form-success"
 import FormError from "./form-error"
@@ -72,8 +72,10 @@ const LoginForm = () => {
       const responseData = await response.json()
 
       console.log(responseData)
-      // router.push("/dashboard")
+      router.push("/dashboard")
 
+      // It will be recognize at runtime.
+      console.log(window.electronAPI.ping())
     } 
     catch (error: unknown) {
       console.log(error)
@@ -86,9 +88,9 @@ const LoginForm = () => {
 
   return (
     <CardWrapper 
-      title="Register" 
-      backButtonHref="/login" 
-      backButtonLabel="Already have an account"
+      title="Login" 
+      backButtonHref="/register" 
+      backButtonLabel="Don't have an account"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -129,7 +131,7 @@ const LoginForm = () => {
             type="submit"
             className="w-full"
           >
-            {form.formState.isSubmitting ? "loading" : "Register"}
+            {form.formState.isSubmitting ? "loading" : "Login"}
           </Button>
         </form>
       </Form>

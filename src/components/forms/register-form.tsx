@@ -5,8 +5,6 @@ import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import { useRouter } from 'next/navigation'
-
 import registerSchema, { TregisterSchema } from "@/schemas/register-schema"
 
 import FormSucess from "./form-success"
@@ -32,7 +30,6 @@ import {
 const RegisterForm = () => {
   const [error, setError] = useState<string>()
   const [success, setSuccess] = useState<string>()  
-  const router = useRouter()
  
   
   const apiEndpoint = 'http://localhost:8080/api/auth/register'
@@ -43,6 +40,7 @@ const RegisterForm = () => {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
+      name: "",
       password: ""
     },
   })
@@ -73,8 +71,8 @@ const RegisterForm = () => {
       const responseData = await response.json()
 
       console.log(responseData)
-      // router.push("/dashboard")
-
+      setSuccess("Account registered")
+      form.reset()
     } 
     catch (error: unknown) {
       console.log(error)
@@ -107,7 +105,7 @@ const RegisterForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="Enter your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -116,12 +114,26 @@ const RegisterForm = () => {
 
           <FormField
             control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter your name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />          
+
+          <FormField
+            control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input type="password" placeholder="Enter your password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

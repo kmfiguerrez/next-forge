@@ -1,5 +1,7 @@
 {
   "name": "merge-electron-next",
+  "author": "Karl Michael Figuerrez",
+  "description": "A Next-Electron app",
   "version": "0.1.0",
   "private": true,
   "main": "src/main.js",
