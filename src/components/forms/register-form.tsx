@@ -18,11 +18,16 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import CardWrapper from "../shared/card-wrapper"
+import { getErrorMessage } from "@/lib/error-message"
 
 
 const RegisterForm = () => {
   const router = useRouter()
  
+
+  const apiEndpoint = 'http://localhost:8080/api/auth/signup'
+
+
   // 1. Define your form.
   const form = useForm<TregisterSchema>({
     resolver: zodResolver(registerSchema),
@@ -33,12 +38,44 @@ const RegisterForm = () => {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: TregisterSchema) {
+  async function onSubmit(values: TregisterSchema) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
-    router.push("/dashboard")
+    
+    try {
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(values)
+      }
+      
+      const response = await fetch(apiEndpoint, requestOptions)
+
+      if (!response.ok) {
+        const error = await response.text()
+        throw new Error("Request failed: " + error)
+      }
+
+      const responseData = await response.json()
+
+      console.log(responseData)
+      // router.push("/dashboard")
+
+    } 
+    catch (error: unknown) {
+      console.log(error)
+      const errorMessage = getErrorMessage(error)
+      console.log("Err message: ", getErrorMessage)
+    }
+
+
   }  
+
+
+
+
   return (
     <CardWrapper>
       <Form {...form}>
@@ -72,7 +109,11 @@ const RegisterForm = () => {
             )}
           />
 
-          <Button type="submit">Submit</Button>
+          <Button 
+            type="submit"
+          >
+            {form.formState.isSubmitting ? "loading" : "Register"}
+          </Button>
         </form>
       </Form>
     </CardWrapper>
