@@ -6,6 +6,10 @@ export const getErrorMessage = (error: unknown): string => {
     message = "API server could be down. Please contact the IT Administrator"
     return message
   }
+  else if (error instanceof Error) {
+    message = error.message
+    return message
+  }
   else {
     return message
   }

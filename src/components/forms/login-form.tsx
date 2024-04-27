@@ -26,21 +26,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import loginSchema, { type TloginSchema } from "@/schemas/login-schema"
 
 
 
-const RegisterForm = () => {
+const LoginForm = () => {
   const [error, setError] = useState<string>()
   const [success, setSuccess] = useState<string>()  
   const router = useRouter()
- 
   
-  const apiEndpoint = 'http://localhost:8080/api/auth/register'
-
+  const apiEndpoint = 'http://localhost:8080/api/auth/login'
 
   // 1. Define your form.
-  const form = useForm<TregisterSchema>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<TloginSchema>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: ""
@@ -48,7 +47,7 @@ const RegisterForm = () => {
   })
  
   // 2. Define a submit handler.
-  async function onSubmit(values: TregisterSchema) {
+  async function onSubmit(values: TloginSchema) {
     // Reset runtime messages first.
     setSuccess(undefined)
     setError(undefined)
@@ -83,8 +82,6 @@ const RegisterForm = () => {
       setError(getErrorMessage(error))
     }
   }  
-
-
 
 
   return (
@@ -140,4 +137,4 @@ const RegisterForm = () => {
   )
 }
 
-export default RegisterForm
+export default LoginForm
